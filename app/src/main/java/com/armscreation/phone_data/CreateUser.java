@@ -21,7 +21,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -36,6 +37,7 @@ public class CreateUser extends AppCompatActivity {
     ProgressBar progressBar;
     FirebaseFirestore fStore;
     String userId;
+    private DatabaseReference mDatabase;
 
     private boolean isShowPassword = false;
     @Override
@@ -130,19 +132,16 @@ public class CreateUser extends AppCompatActivity {
 
 
                             Toast.makeText(CreateUser.this, "User Created", Toast.LENGTH_SHORT).show();
-                            userId = (fAuth.getCurrentUser()).getUid();
 
-                            DocumentReference documentReference = fStore.collection("Users").document(userId);
-                            Map<String, Object> user = new HashMap<>();
-                            user.put("Full Name", fullName);
-                            user.put("Phone Number", phone);
-                            user.put("Email Id", email);
-                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d("TAG", "onSuccess: user Profile is Created for" + userId);
-                                }
-                            });
+                            mDatabase = FirebaseDatabase.getInstance().getReference();
+                            userId = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
+                            Map<String, Object> user1 = new HashMap<>();
+                            user1.put("Full Name", fullName);
+                            user1.put("Phone Number", phone);
+                            user1.put("Email Id", email);
+
+                            mDatabase.child("Users Data").child(userId).setValue(user1);
+
                             startActivity(new Intent(getApplicationContext(), Login.class));
 
 
@@ -155,8 +154,7 @@ public class CreateUser extends AppCompatActivity {
 
             }
         });
-
-        Button alreadyRegisteredBtn = findViewById(R.id.alreadyRegisteredBtn);
+         Button alreadyRegisteredBtn = findViewById(R.id.alreadyRegisteredBtn);
         alreadyRegisteredBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
