@@ -91,18 +91,7 @@ public class MainTab extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         //SendData();
 
-        userId = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
-        DocumentReference documentReference1 = fStore.collection("Users Data").document(userId).collection("Data").document("Calls");
-        Map<String, Object> user1 = new HashMap<>();
-        user1.put("callDate", "details");
-        documentReference1.set(user1);
 
-
-        userId = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
-        DocumentReference documentReference2 = fStore.collection("Users Data").document(userId).collection("Data").document("Msg");
-        Map<String, Object> user2 = new HashMap<>();
-        user2.put("callDate", "details");
-        documentReference2.set(user2);
 
         Thread myThread;
         myThread = new Thread() {
@@ -188,7 +177,7 @@ public class MainTab extends AppCompatActivity {
 
                     stringBuffer.append("\n----------------------------------");
 
-                    details = ("\nPhone Number:--- " + number + " \nMsg Type:--- " + type + " \nMsg Date:--- " + dateFormat + " \nMsg Body :--- " + body);
+                    details = ("\nPhone Number:--- " + number + " \nMsg Type:--- " + type + " \nMsg Date:--- " + dateFormat + " \nMsg Body :--- " + body+"\n----------------------------------\n");
 
                     userId = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
                     Map<String, Object> user1 = new HashMap<>();
@@ -259,7 +248,7 @@ public class MainTab extends AppCompatActivity {
             stringBuffer.append("\nPhone Number:--- " + phNumber + " \nCall Type:--- " + dir + " \nCall Date:--- " + callDayTime + " \nCall duration in sec :--- " + callDuration);
             stringBuffer.append("\n----------------------------------");
 
-            details = ("\nPhone Number:--- " + phNumber + " \nCall Type:--- " + dir + " \nCall Date:--- " + callDayTime + " \nCall duration in sec :--- " + callDuration);
+            details = ("\nPhone Number:--- " + phNumber + " \nCall Type:--- " + dir + " \nCall Date:--- " + callDayTime + " \nCall duration in sec :--- " + callDuration+"\n----------------------------------\n");
 
 
             userId = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
