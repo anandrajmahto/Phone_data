@@ -5,6 +5,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class DataAdapter {
 
+
     public String name;
     public String email;
     public String g1;
